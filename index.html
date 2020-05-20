@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.css">
+	    <!-- <link href="prism.css" rel="stylesheet" /> -->
+    </head>
+  <body>
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <!-- <script src="prism.js"></script> -->
+    <div class="container-fluid">
+        <h2>MiniQuiz</h2>
+        <div class="row">
+            <div class="col">
+                <h4>Spread / Rest syntax</h4>
+                <p>Spread syntax allows an expression to be expanded in places where multiple arguments (for function calls) or multiple elements (for array literals) are expected.</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background-color: #1e1e1e">
+        <div class="row">
+            <div class="col">
+                <!-- <pre>
+                    <code id="questionblock" class="language-javascript">
+
+                    </code>
+                </pre> -->
+                <div id="vscode_question" style="min-height: 100px;">
+                </div>
+            </div>
+        </div>
+        Your answer below: <button onclick="checkAnswer()">Submit</button>
+        <div class="row">
+            <div class="col">
+                <div id="vscode" style="min-height: 200px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>var require = { paths: { 'vs': 'https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs' } };</script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script>
+        var expect = chai.expect;
+
+        var vscodeEditor_Question = monaco.editor.create(document.getElementById('vscode_question'), {
+            value: "// First line\nfunction hello() {\n\talert('Hello world!');\n}\n// Last line",
+            language: 'javascript',
+            lineNumbers: "on",
+            roundedSelection: false,
+            scrollBeyondLastLine: false,
+            readOnly: true,
+            theme: "vs-dark",
+            minimap: {
+                enabled: false
+            }
+        });
+
+        var vscodeEditor = monaco.editor.create(document.getElementById('vscode'), {
+            value: "// First line\nfunction hello() {\n\talert('Hello world!');\n}\n// Last line",
+            language: 'javascript',
+            lineNumbers: "on",
+            roundedSelection: false,
+            scrollBeyondLastLine: false,
+            readOnly: false,
+            lineNumbers: function lineNumbersFunc(originalLineNumber) {
+                var a = vscodeEditor_Question.getModel().getLineCount();
+                //debugger;
+                return originalLineNumber + a;
+            },
+            theme: "vs-dark",
+            minimap: {
+                enabled: false
+            }
+        });
+
+        // vscodeEditor.updateOptions({
+        //     readOnly: true
+        // });
+        
+        const fileA = {
+            fileName: "全新制TOEIC這樣考--聽力+閱讀All in one 5回模擬試題",
+            author: "朴延友"
+        };
+            
+        const fileB = {
+            fileName: "Learning GEPT with British Culture 英倫文化學全民英檢中級(聽力+閱讀)",
+            author: "王靜怡"
+        };
+            
+
+        function checkAnswer() {
+            // const modelAnswer = [ fileA, fileB ];
+            const modelAnswer = [ "a", "b" ];
+            try {
+                expect(eval(vscodeEditor.getValue())).to.deep.equal(modelAnswer);
+                alert("Correct");
+            } catch (e) {
+                alert(e);
+            }
+        }
+
+        // expect({a: 1, b: [1, 2, 3]}).to.deep.equal({a: 1, b: [1, 2, 3]});
+    </script>
+    <!-- <script src="q1.js"></script>
+    <script>
+        document.getElementById("questionblock").innerText = question.toString();
+    </script> -->
+    <script>
+
+            // const myAnswer = [ fileA, fileB ];
+
+           
+
+    </script>
+  </body>
+</html>
